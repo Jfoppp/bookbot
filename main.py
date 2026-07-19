@@ -13,14 +13,14 @@ def argument_error_check():
         sys.exit(1)
 
 
-def get_book_text(book_path):
+def get_book_text(book_path: str) -> str:
     with open(book_path, encoding="utf-8") as f:
-        book_text = f.read()
+        book_text: str = f.read()
     return book_text
 
-def file_error_check(book_path):
+def file_error_check(book_path: str) -> str:
     try:
-        book_text = get_book_text(book_path)
+        book_text: str = get_book_text(book_path)
     except FileNotFoundError:
         print(f"Error: The file at {book_path} was not found.", file=sys.stderr)
         sys.exit(1)
@@ -36,7 +36,7 @@ def file_error_check(book_path):
     return book_text
 
 
-def print_report(book_path, word_count, sorted_character_list):
+def print_report(book_path: str, word_count: int, sorted_character_list: list[tuple[str, int]]):
     print("=========== BOOKBOT =============")
     print(f"Analyzing book found at {book_path}...")
     print("----------- Word Count ----------")
@@ -50,11 +50,11 @@ def print_report(book_path, word_count, sorted_character_list):
 
 def main():
     argument_error_check()
-    book_path = sys.argv[1]
-    book_text = file_error_check(book_path)
-    word_count = get_word_count(book_text)
-    character_dict = get_character_count(book_text)
-    sorted_character_list = chars_dict_to_sorted_list(character_dict)
+    book_path: str = sys.argv[1]
+    book_text: str = file_error_check(book_path)
+    word_count: int = get_word_count(book_text)
+    character_dict: dict[str, int] = get_character_count(book_text)
+    sorted_character_list: list[tuple[str, int]] = chars_dict_to_sorted_list(character_dict)
     print_report(book_path, word_count, sorted_character_list)
 
 if __name__ == "__main__":
